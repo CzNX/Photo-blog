@@ -1,0 +1,86 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block head %}					
+{% endblock head %}
+{% block content %}
+
+
+{% if messages %}
+<div class="alert alert-success alert-dismissible mb-0" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+        {{ message }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+</div>
+
+
+<main role="main">
+
+  <section class="jumbotron text-center py-1 mt-0" style="background-color:#f4f4f4">
+    <div class="container">
+      <h1 class="jumbotron-heading">About Me</h1>
+      <p class="lead text-dark">Neymar da Silva Santos Júnior, commonly known as Neymar Jr. or simply Neymar, is a Brazilian professional footballer who plays as a forward for French club Paris Saint-Germain and the Brazil national team.</p>
+   		<img src = "{% static 'image/me.jpg' %}" class="img-responsive" width='100%';  height='100%';>
+    </div>
+  </section>
+
+
+     <div class="container text-xl-center">
+      <h1 class=" btn btn-lg btn-success mt-3 mb-1">Our Contents</h1><br>
+              <a href="{% url 'create' %}" class=" btn btn-sm btn-secondary">Add Post</a>
+    </div>
+ <div class="album py-5 bg-light">
+    <div class="container">    	
+		      <div class="row">	
+		      {%for objects in contacts %}	      	
+		        <div class="col-lg-4 col-md-4 col-sm-6">
+		          <div class="card mb-4 shadow-sm">
+		           <img class="card-img-top img-responsive" src ="{{ objects.image.url }}">
+		            <div class="card-body">
+		              <p class="card-text">{{objects.description | truncatewords:10}}<a href="/detail/{{objects.id}}" style="color:red">readmore</a><hr>
+		              <p class="card-text text-right"> - {{objects.author}}</p>
+		              <div class="d-flex justify-content-between align-items-center">
+		                <div class="btn-group">
+		                	<a class="btn btn-sm btn-primary" href="/detail/{{objects.id}}" role="button">View</a>
+		                	<a class="btn btn-sm btn-warning" href="/update/{{objects.id}}" role="button">Edit</a>
+                      <a href="/delete/{{objects.id}}" class="btn btn-sm btn-danger" role="button" onclick="return confirm('Are you sure you want to delete this?')">Delete</a>
+		                </div>
+		                <small class="text-muted">{{objects.date_time}}</small>
+		              </div>
+		            </div>
+		          </div>
+		        </div>
+		        {% endfor %}
+		    	</div>		    
+		    </div>
+</div>     
+</main>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center ">
+  	{% if contacts.has_previous %}	
+  		<li class="page-item"><a class="page-link" href="?page={{ contacts.previous_page_number }}">previous</a></li>
+     	 <li class="page-item"><a class="page-link" href="?page=1">first</a></li>   	
+    {% endif %}
+    
+    <li class="page-item active">
+     	<a class="page-link" href="">Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.<span class="sr-only">(current)</span></a> 
+    </li>
+
+    {% if contacts.has_next %}  
+     <li><a class="page-link" href="?page={{ contacts.paginator.num_pages }}">last</a>
+    </li>
+     <li class="page-item"><a class="page-link" href="?page={{ contacts.next_page_number }}">next</a></li>
+    <li class="page-item">
+    {% endif %}
+  </ul>
+</nav>
+{% endblock content %}

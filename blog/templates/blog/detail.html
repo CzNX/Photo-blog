@@ -1,0 +1,68 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block head %}
+
+		
+		
+	
+{% endblock head %}
+{% block content %}
+
+<!-- Page Content -->
+<div class="container mt-1 text-xl-center">
+
+
+  <!-- Portfolio Item Row -->
+  <div class="row">
+
+    <div class="col-md-8">
+      <img class="img-fluid" src="{{obj.image.url}}" alt="Error">
+    </div>
+
+    <div class="col-md-4">
+      <h3 class="my-3">Post Description</h3>
+      <p>{{obj.description}}</p>
+      <h3 class="my-3">Post Details</h3>
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-success">Author - {{obj.author}}</li>
+        <li class="list-group-item list-group-item-secondary">Created @ {{obj.date_time}} </li>
+        <li class="list-group-item list-group-item-primary"><a href="http://www.facebook.com/{{obj.author}}" style="color: inherit;"/>Facebook</li>
+        <li class="list-group-item list-group-item-primary"><a href="http://mail.google.com/{{obj.author}}" style="color: inherit;"/>Email</li>
+      </ul>
+    </div>
+
+  </div>
+  <!-- /.row -->
+
+  <!-- Related Projects Row -->
+  <h3 class="my-4">Latest Posts</h3>
+  <div class="row">
+{% for latests in latest %}
+    <div class="col-md-3 col-sm-6 mb-4">
+      <a href="/detail/{{latests.id}}">
+            <img class="img-fluid" src="{{ latests.image.url }}" alt="Error">
+          </a>   	
+    </div>
+{% endfor %}
+<!--      <div class="col-md-3 col-sm-6 mb-4">
+      <a href="/detail/11">
+            <img class="img-fluid" src="{% static 'image/download (2).jpg' %}" alt="">
+          </a>
+    </div>
+
+    <div class="col-md-3 col-sm-6 mb-4">
+      <a href="/detail/4">
+            <img class="img-fluid" src="{% static 'image/Classical-and-folk-dances-of-Nepal.jpg' %}" alt="">
+          </a>
+    </div>
+
+    <div class="col-md-3 col-sm-6 mb-4">
+      <a href="/detail/10">
+            <img class="img-fluid" src="{% static 'image/n.jpg' %}" alt="">
+          </a>
+    </div> -->
+
+  </div>
+  <a class="btn btn-sm btn-outline-success mb-4" href="/" role="button">Home</a>
+</div>
+{% endblock content %}
